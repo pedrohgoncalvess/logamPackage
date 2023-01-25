@@ -1,26 +1,40 @@
 from logConfig import logConfig,loadConfig
-from logValidationsFormats import messageSizeValidation,dateFormat,eventValidation,levelValidation
+from logValidationsFormats import messageSizeValidation,dateFormat,eventValidation,levelValidation,archiveValidation
+from colorsFont import colors
 
 def writeLog(message:str,
              archive=logConfig()['default_archive'],
              level=logConfig()['default_level'],
              event=logConfig()['default_event']):
+
+    level = level.upper()
+    event = event.upper()
     dictConfiggs = logConfig()
-    sepLog = dictConfiggs['sep']
-    logFormat = dictConfiggs['log_format']
+
     messageLog = messageSizeValidation(message)
-    dateLog = dateFormat()
-    archiveLog = archive
-    levelLog = levelValidation()
-    messageFormat = str(logFormat)
+    archiveLog = archiveValidation(archive)
+    levelLog = levelValidation(level)
     eventLog = eventValidation(event)
+    listaLog = [messageLog,archiveLog,levelLog,eventLog]
+    for variable in listaLog:
+        if variable == False:
+            exit()
 
-    dictFormat = {'time':dateLog,'event':}
-    for camp in logFormat:
-        messageFormat.replace(camp)
+    logFormat = dictConfiggs['log_format']
+    messageFormat = str(logFormat)
+    sepLog = dictConfiggs['sep']
+    dateLog = dateFormat()
 
 
-    print(sepLog,logFormat,messageLog,dateLog,archiveLog,levelLog)
+    dictFormat = {'TIME':dateLog,'EVENT':eventLog,'LEVEL':levelLog,'MESSAGE':messageLog}
+    for camp in list(dictFormat.keys()):
+        messageFormat = messageFormat.replace(camp,dictFormat[camp])
+    messageFormat = messageFormat.replace('[','')
+    messageFormat = messageFormat.replace(']', '')
+    messageFormat = messageFormat.replace("'", '')
+    messageFormat = messageFormat.replace(',', ' '+sepLog)
+    print(messageFormat)
+    #print(sepLog,logFormat,messageLog,dateLog,archiveLog,levelLog)
 
-writeLog('PEDRO HENRIQUE GONCALVES CARLOS PEDRO HENRIQUE GONCALVES CARLOS PEDRO HENRIQUE GONCALVES CARLOS')
-print(logConfig())
+
+#print(logConfig())

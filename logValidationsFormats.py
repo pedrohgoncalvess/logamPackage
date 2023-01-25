@@ -7,8 +7,10 @@ def archiveValidation(archive:str) -> bool:
     dictLogging = logConfig()
     for value in dictLogging['archives']:
         if archive == value:
-            print(colors('red') + f"{archive} not exist in LogConfig.")
+            return archive
 
+    print(colors('red') + f"{archive} not exist in LogConfig.")
+    archive = False
     return archive
 
 def messageSizeValidation(message:str) -> str:
@@ -23,9 +25,10 @@ def levelValidation(level:str) -> bool:
     dictLogging = logConfig()
     for value in dictLogging['levels']:
         if level == value:
-            print(colors('red') + f"{level} not exist in LogConfig.")
-            exit()
+            return level
 
+    print(colors('red') + f"{level} not exist in LogConfig.")
+    level = False
     return level
 
 def dateFormat() -> str:
@@ -42,14 +45,15 @@ def dateFormat() -> str:
             date = str(now.strftime(date_format))
         except:
             print(colors('red')+f"Date format in LogConfig is invalid.")
-            exit()
+            date = False
     return date
 
 def eventValidation(event:str) -> bool:
     dictLogging = logConfig()
     for value in dictLogging['events']:
         if event == value:
-            print(colors('red') + f"{event} not exist in LogConfig.")
-            exit()
+            return event
 
+    print(colors('red') + f"{event} not exist in LogConfig.")
+    event = False
     return event

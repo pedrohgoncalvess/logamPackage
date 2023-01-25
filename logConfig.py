@@ -20,6 +20,10 @@ def loadConfig() -> str | Dict:
                 key = listConfigs[0]
                 if key == 'archives' or key == 'levels' or key == 'log_format' or key == 'events':
                     value = listConfigs[1].split(',')
+                    lista = []
+                    for v in value:
+                        lista.append(v.upper())
+                    value = lista
                 else:
                     value = listConfigs[1]
                 dictConfigAppend = {key:value}
@@ -67,7 +71,7 @@ def logConfig():
 
 def defaultConfigs() -> Dict:
     dictLogging = {'levels': ['INFO', 'WARN', 'TRACE', 'ERROR', 'FATAL'], 'length_message': 'NO_LIMIT', 'date_format': None,
-                   'log_format': ['time', 'method', 'level', 'message'],
+                   'log_format': ['time', 'event', 'level', 'message'],
                    'sep': ',','events':'log'}
 
     return dictLogging
