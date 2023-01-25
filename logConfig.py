@@ -18,7 +18,7 @@ def loadConfig() -> str | Dict:
             listConfigs = i.split('=')
             if len(listConfigs) > 1:
                 key = listConfigs[0]
-                if key == 'archives' or key == 'levels' or  key == 'log_message':
+                if key == 'archives' or key == 'levels' or key == 'log_format' or key == 'events':
                     value = listConfigs[1].split(',')
                 else:
                     value = listConfigs[1]
@@ -45,8 +45,7 @@ def logConfig():
         print(f"{config} not found in logConfig")
         exit()
     if preferences == True:
-        defaultValues = {'levels':['INFO','WARN','TRACE','ERROR','FATAL'],'length_message':9999,'date_format':None,'log_format':['time', 'method', 'level', 'message'],
-                         'sep':','}
+        defaultValues = defaultConfigs()
         for configs in list(defaultValues.keys()):
             try:
                 vars()[configs] = dictConfigs[configs]
@@ -56,16 +55,21 @@ def logConfig():
             dictLogging.update(vars()[configs])
     else:
         dictLogging = defaultConfigs()
-    dictLogging.update({'default_level':dictLogging['levels'][0]})
+
+    defaultConfigsSet = {'default_level': 'levels' , 'default_archive':'archives' , 'default_event':'events'}
+    for default in list(defaultConfigsSet.keys()):
+        try:
+            dictLogging[default]
+        except:
+            dictLogging.update({default:dictLogging[defaultConfigsSet[default]][0]})
 
     return dictLogging
 
 def defaultConfigs() -> Dict:
-    dictLogging = {'levels': ['INFO', 'WARN', 'TRACE', 'ERROR', 'FATAL'], 'length_message': 9999, 'date_format': None,
+    dictLogging = {'levels': ['INFO', 'WARN', 'TRACE', 'ERROR', 'FATAL'], 'length_message': 'NO_LIMIT', 'date_format': None,
                    'log_format': ['time', 'method', 'level', 'message'],
-                   'sep': ',', 'default_level': 'INFO'}
+                   'sep': ',','events':'log'}
 
     return dictLogging
-
 
 logConfig()

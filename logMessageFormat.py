@@ -23,7 +23,6 @@ def checkLevel(configsLogging:Dict) -> str:
 
 
 
-def writeLog(message:str,):
-    pass
+
 
 
