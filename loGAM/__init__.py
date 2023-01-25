@@ -1,0 +1,1 @@
+from .logGenerator import writeLog

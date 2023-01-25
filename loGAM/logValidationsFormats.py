@@ -1,7 +1,6 @@
-from logConfig import logConfig
+from loGAM.logConfig import logConfig
 from datetime import datetime
-from typing import Dict
-from colorsFont import colors
+from .colorsFont import colors
 
 def archiveValidation(archive:str) -> bool:
     dictLogging = logConfig()

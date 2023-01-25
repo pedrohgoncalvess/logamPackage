@@ -1,15 +1,17 @@
-from logConfig import logConfig,loadConfig
-from logValidationsFormats import messageSizeValidation,dateFormat,eventValidation,levelValidation,archiveValidation
-from colorsFont import colors
+from loGAM.logConfig import logConfig
+from .logValidationsFormats import messageSizeValidation,dateFormat,eventValidation,levelValidation,archiveValidation
+from .logArchives import createArchives
 
 def writeLog(message:str,
              archive=logConfig()['default_archive'],
              level=logConfig()['default_level'],
              event=logConfig()['default_event']):
 
+
     level = level.upper()
     event = event.upper()
     dictConfiggs = logConfig()
+    createArchives(dictConfiggs)
 
     messageLog = messageSizeValidation(message)
     archiveLog = archiveValidation(archive)
@@ -33,8 +35,9 @@ def writeLog(message:str,
     messageFormat = messageFormat.replace(']', '')
     messageFormat = messageFormat.replace("'", '')
     messageFormat = messageFormat.replace(',', ' '+sepLog)
-    print(messageFormat)
-    #print(sepLog,logFormat,messageLog,dateLog,archiveLog,levelLog)
 
+    path = dictConfiggs['path']+'\\Logs\\'+archive+'.txt'
 
-#print(logConfig())
+    with open(path,'a') as arquivo:
+        arquivo.write(messageFormat+'\n')
+

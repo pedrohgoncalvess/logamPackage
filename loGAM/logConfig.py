@@ -1,16 +1,16 @@
 from typing import Dict
 from os import path
-from colorsFont import colors
+from .colorsFont import colors
 
 def loadConfig() -> str | Dict:
-    with open('logConfig','r') as log:
+    with open(r'C:\Users\Pedro\Desktop\WorkSpace\Projetos\loGAMPackage\config', 'r') as log:
         configs = log.read()
         preferences = configs.find('[preferences]')
         if preferences > -1:
             preferences = True
         else:
             preferences = False
-            print(colors('cyan') + "Not found [preferences] in logConfig, read documentation for more flexible")
+            print(colors('cyan') + "Not found [preferences] in config, read documentation for more flexible")
         configs = configs.replace(' ', '')
         configs = configs.split('\n')
         dictConfigs = {}
@@ -46,7 +46,7 @@ def logConfig():
         dictLogging.update(pathLogging)
         dictLogging.update(archives)
     except KeyError as config:
-        print(f"{config} not found in logConfig")
+        print(f"{config} not found in config")
         exit()
     if preferences == True:
         defaultValues = defaultConfigs()

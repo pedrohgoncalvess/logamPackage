@@ -2,11 +2,11 @@ from os import path
 from typing import Dict
 from types import FunctionType
 import os
-from logConfig import loadConfig
+from .logConfig import loadConfig,logConfig
 
 
 def createDirectory(func:FunctionType) -> FunctionType:
-    dictConfigs = loadConfig()
+    dictConfigs = logConfig()
     pathLogging = dictConfigs['path']
     vali = path.exists(pathLogging+'\\Logs')
     if vali != True:
